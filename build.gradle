@@ -73,7 +73,7 @@ ext {
 publishing {
   publications {
     pianoNexus(MavenPublication) {
-      group = 'io.piano.common.auth0'
+      group = 'io.piano.common'
       artifactId = 'auth0-java'
       // version = 1.34.0-fork
     }
