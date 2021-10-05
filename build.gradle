@@ -1,7 +1,9 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'com.auth0.gradle.oss-library.java'
+    id 'java-library'
+    id 'maven-publish'
+  // id 'com.auth0.gradle.oss-library.java'
 }
 
 repositories {
@@ -11,6 +13,7 @@ repositories {
 group = 'com.auth0'
 logger.lifecycle("Using version ${version} for ${name} group $group")
 
+/*
 oss {
     name 'auth0'
     repository 'auth0-java'
@@ -29,6 +32,7 @@ oss {
         }
     }
 }
+*/
 
 jacocoTestReport {
     reports {
@@ -66,11 +70,34 @@ ext {
     hamcrestVersion = '2.2'
 }
 
+publishing {
+  publications {
+    pianoNexus(MavenPublication) {
+      group = 'io.piano.common'
+      artifactId = 'auth0-java'
+      // version = 1.34.0-fork
+    }
+  }
+
+  repositories {
+    maven {
+      name = 'piano_nexus'
+      url = "https://nexus.piano.io/repository/maven-releases-s3/"
+      credentials {
+        username System.getProperty("nexus.publish.username", "VX Deployer")
+        password System.getProperty("nexus.publish.password", "passed-via-env")
+      }
+    }
+  }
+}
+
+
 dependencies {
+    implementation "com.auth0:java-jwt:3.18.1"
+
     implementation "com.squareup.okhttp3:okhttp:${okhttpVersion}"
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.12.1"
-    implementation "com.auth0:java-jwt:3.14.0"
     implementation "net.jodah:failsafe:2.4.1"
 
     testImplementation "org.bouncycastle:bcprov-jdk15on:1.68"
