@@ -2,9 +2,9 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
     }
-    plugins {
-        id 'com.auth0.gradle.oss-library.java' version '0.16.0'
-    }
+//    plugins {
+//        id 'com.auth0.gradle.oss-library.java' version '0.16.0'
+//    }
 }
 
 rootProject.name = 'auth0'
